@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { ArrowLeft } from "lucide-react"
 import ChatForm from "../components/ChatForm"
 import SuggestedQuestions from "../components/SuggestedQuestions"
 import UserMessage from "../components/UserMessage"
 import AgentMessage from "../components/AgentMessage"
+import ChatHeader from "../components/ChatHeader"
 
 const characters = {
   gatsby: {
@@ -131,29 +131,7 @@ const ChatPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-app-background">
-      {/* Header with character info and back button */}
-      <header className="shadow-sm border-b bg-app-level1 border-app-border">
-        <div className="max-w-3xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={handleBackToSelection}
-              className="flex items-center cursor-pointer space-x-2 px-4 py-2 text-gray-300 hover:text-yellow-500 hover:bg-app-background rounded-lg transition-colors duration-200"
-            >
-              <ArrowLeft size={20} />
-              <span>Back to Characters</span>
-            </button>
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-yellow-500">
-                <img src={currentCharacter.avatar} alt={currentCharacter.name} className="w-full h-full object-cover" />
-              </div>
-              <div>
-                <h1 className="text-lg font-semibold text-white">{currentCharacter.name}</h1>
-                <p className="text-sm text-gray-300">Online</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <ChatHeader character={currentCharacter} onBackClick={handleBackToSelection} />
 
       {/* Main Chat Area */}
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 flex flex-col">
