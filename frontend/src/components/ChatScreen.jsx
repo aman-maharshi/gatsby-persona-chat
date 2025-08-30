@@ -1,0 +1,213 @@
+import React, { useState, useRef, useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom"
+import { ArrowLeft } from "lucide-react"
+import ChatForm from "./ChatForm"
+import SuggestedQuestions from "./SuggestedQuestions"
+import UserMessage from "./UserMessage"
+import AgentMessage from "./AgentMessage"
+
+const characters = {
+  gatsby: {
+    name: "Jay Gatsby",
+    avatar: "/gatsby.png",
+    welcomeMessage:
+      "Greetings, old sport! I'm Jay Gatsby, and I'm delighted you've joined me at my estate in West Egg. Pour yourself a drink and let's discuss dreams, literature, love, and the endless possibilities that tomorrow may bring. What's on your mind tonight?"
+  },
+  nick: {
+    name: "Nick Carraway",
+    avatar: "/nick.png",
+    welcomeMessage:
+      "Hello there. I'm Nick Carraway, and I find myself reflecting on the remarkable events I've witnessed here in West Egg and East Egg. I'd be happy to share my observations about this fascinating, if troubling, world of wealth and dreams."
+  },
+  daisy: {
+    name: "Daisy Buchanan",
+    avatar: "/daisy.png",
+    welcomeMessage:
+      "Oh, hello darling! I'm Daisy Buchanan. Isn't it wonderful to meet someone new? I do hope we can have the most delightful conversation. Tell me, what brings you to our little corner of the world?"
+  }
+}
+
+const ChatScreen = () => {
+  const { characterId } = useParams()
+  const navigate = useNavigate()
+  const [messages, setMessages] = useState([])
+  const [inputMessage, setInputMessage] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const messagesEndRef = useRef(null)
+
+  const currentCharacter = characters[characterId]
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
+  // Initialize with welcome message when component mounts
+  useEffect(() => {
+    const character = characters[characterId]
+    if (character) {
+      setMessages([
+        {
+          role: "assistant",
+          content: character.welcomeMessage,
+          timestamp: new Date().toISOString(),
+          character: characterId
+        }
+      ])
+    }
+  }, [characterId])
+
+  const handleSendMessage = async e => {
+    e.preventDefault()
+    if (!inputMessage.trim() || isLoading) return
+
+    const userMessage = { role: "user", content: inputMessage, timestamp: new Date().toISOString() }
+    setMessages(prev => [...prev, userMessage])
+    setInputMessage("")
+    setIsLoading(true)
+
+    try {
+      const response = await fetch("http://localhost:3000/api/character/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ question: inputMessage, character: characterId })
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to get response")
+      }
+
+      const data = await response.json()
+      const assistantMessage = {
+        role: "assistant",
+        content: data.answer,
+        timestamp: data.timestamp || new Date().toISOString(),
+        character: data.character || characterId
+      }
+      setMessages(prev => [...prev, assistantMessage])
+    } catch (error) {
+      console.error("Error:", error)
+      const errorMessage = {
+        role: "assistant",
+        content:
+          "My apologies, old sport. It seems there's been a mishap with our connection. Please ensure the server is running on port 3000.",
+        timestamp: new Date().toISOString(),
+        character: characterId
+      }
+      setMessages(prev => [...prev, errorMessage])
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleSuggestedQuestion = question => {
+    setInputMessage(question)
+  }
+
+  const handleBackToSelection = () => {
+    navigate("/")
+  }
+
+  if (!currentCharacter) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-app-background">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">Character not found</h2>
+          <button
+            onClick={handleBackToSelection}
+            className="px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-lg transition-colors duration-200"
+          >
+            Return to Character Selection
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col bg-app-background">
+      {/* Header with character info and back button */}
+      <header className="shadow-sm border-b bg-app-level1 border-app-border">
+        <div className="max-w-3xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <button
+              onClick={handleBackToSelection}
+              className="flex items-center space-x-2 px-4 py-2 text-gray-300 hover:text-yellow-500 hover:bg-app-background rounded-lg transition-colors duration-200"
+            >
+              <ArrowLeft size={20} />
+              <span>Back to Characters</span>
+            </button>
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-yellow-500">
+                <img src={currentCharacter.avatar} alt={currentCharacter.name} className="w-full h-full object-cover" />
+              </div>
+              <div>
+                <h1 className="text-lg font-semibold text-white">{currentCharacter.name}</h1>
+                <p className="text-sm text-gray-300">Online</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Chat Area */}
+      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 flex flex-col">
+        {/* Messages Container */}
+        <div className="flex-1 rounded-lg shadow-sm border flex flex-col bg-app-level1 border-app-border">
+          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            {messages.map((message, index) =>
+              message.role === "user" ? (
+                <UserMessage key={index} content={message.content} timestamp={message.timestamp} />
+              ) : (
+                <AgentMessage
+                  key={index}
+                  content={message.content}
+                  timestamp={message.timestamp}
+                  character={message.character || characterId}
+                />
+              )
+            )}
+
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="rounded-lg rounded-bl-none px-4 py-3 bg-app-background">
+                  <div className="flex space-x-1">
+                    <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce"></div>
+                    <div
+                      className="w-2 h-2 bg-gray-300 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.1s" }}
+                    ></div>
+                    <div
+                      className="w-2 h-2 bg-gray-300 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.2s" }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Suggested Questions */}
+          {messages.length === 1 && (
+            <SuggestedQuestions onQuestionSelect={handleSuggestedQuestion} character={characterId} />
+          )}
+
+          <ChatForm
+            inputMessage={inputMessage}
+            setInputMessage={setInputMessage}
+            handleSendMessage={handleSendMessage}
+            isLoading={isLoading}
+          />
+        </div>
+      </main>
+    </div>
+  )
+}
+
+export default ChatScreen
