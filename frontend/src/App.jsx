@@ -10,7 +10,8 @@ const App = () => {
     {
       role: "assistant",
       content:
-        "Greetings, old sport! I'm Jay Gatsby, and I'm delighted you've joined me at my estate in West Egg. Pour yourself a drink and let's discuss dreams, literature, love, and the endless possibilities that tomorrow may bring. What's on your mind tonight?"
+        "Greetings, old sport! I'm Jay Gatsby, and I'm delighted you've joined me at my estate in West Egg. Pour yourself a drink and let's discuss dreams, literature, love, and the endless possibilities that tomorrow may bring. What's on your mind tonight?",
+      timestamp: new Date().toISOString()
     }
   ])
   const [inputMessage, setInputMessage] = useState("")
@@ -29,7 +30,7 @@ const App = () => {
     e.preventDefault()
     if (!inputMessage.trim() || isLoading) return
 
-    const userMessage = { role: "user", content: inputMessage }
+    const userMessage = { role: "user", content: inputMessage, timestamp: new Date().toISOString() }
     setMessages(prev => [...prev, userMessage])
     setInputMessage("")
     setIsLoading(true)
@@ -48,14 +49,19 @@ const App = () => {
       }
 
       const data = await response.json()
-      const assistantMessage = { role: "assistant", content: data.answer }
+      const assistantMessage = {
+        role: "assistant",
+        content: data.answer,
+        timestamp: data.timestamp || new Date().toISOString()
+      }
       setMessages(prev => [...prev, assistantMessage])
     } catch (error) {
       console.error("Error:", error)
       const errorMessage = {
         role: "assistant",
         content:
-          "My apologies, old sport. It seems there's been a mishap with our connection. Please ensure the server is running on port 3000."
+          "My apologies, old sport. It seems there's been a mishap with our connection. Please ensure the server is running on port 3000.",
+        timestamp: new Date().toISOString()
       }
       setMessages(prev => [...prev, errorMessage])
     } finally {
@@ -78,9 +84,9 @@ const App = () => {
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
             {messages.map((message, index) =>
               message.role === "user" ? (
-                <UserMessage key={index} content={message.content} />
+                <UserMessage key={index} content={message.content} timestamp={message.timestamp} />
               ) : (
-                <AgentMessage key={index} content={message.content} />
+                <AgentMessage key={index} content={message.content} timestamp={message.timestamp} />
               )
             )}
 

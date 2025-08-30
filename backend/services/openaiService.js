@@ -26,6 +26,7 @@ export const getGatsbyResponse = async question => {
   return {
     success: true,
     answer: response.choices[0].message.content,
-    question: question
+    question: question,
+    timestamp: new Date().toISOString()
   }
 }
