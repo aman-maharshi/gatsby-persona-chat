@@ -4,8 +4,8 @@ export const config = {
   port: process.env.PORT || 3000,
   openai: {
     apiKey: process.env.GEMINI_API_KEY,
-    baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
-    model: "gemini-2.0-flash"
+    baseURL: process.env.GEMINI_BASE_URL,
+    model: process.env.GEMINI_MODEL
   }
 }
 
