@@ -1,10 +1,13 @@
 import React from "react"
 
-const SuggestedQuestions = ({ onQuestionSelect }) => {
-  const suggestedQuestions = [
-    "Do you believe one can truly repeat the past?",
-    "What was it like at your magnificent parties?"
-  ]
+const SuggestedQuestions = ({ onQuestionSelect, character = "gatsby" }) => {
+  const characterQuestions = {
+    gatsby: ["Tell me about your dreams and the green light, Gatsby", "Do you believe one can truly repeat the past?"],
+    nick: ["What did you think of Gatsby when you first met him?", "What's your perspective on the American Dream?"],
+    daisy: ["How do you feel about your role in society?", "What do you think about love and wealth?"]
+  }
+
+  const suggestedQuestions = characterQuestions[character] || characterQuestions.gatsby
 
   return (
     <div className="px-6 pb-4">

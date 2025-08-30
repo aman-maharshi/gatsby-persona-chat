@@ -6,12 +6,14 @@ import UserMessage from "./components/UserMessage"
 import AgentMessage from "./components/AgentMessage"
 
 const App = () => {
+  const [selectedCharacter, setSelectedCharacter] = useState("gatsby")
   const [messages, setMessages] = useState([
     {
       role: "assistant",
       content:
         "Greetings, old sport! I'm Jay Gatsby, and I'm delighted you've joined me at my estate in West Egg. Pour yourself a drink and let's discuss dreams, literature, love, and the endless possibilities that tomorrow may bring. What's on your mind tonight?",
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      character: "gatsby"
     }
   ])
   const [inputMessage, setInputMessage] = useState("")
@@ -36,12 +38,12 @@ const App = () => {
     setIsLoading(true)
 
     try {
-      const response = await fetch("http://localhost:3000/api/gatsby/ask", {
+      const response = await fetch("http://localhost:3000/api/character/ask", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ question: inputMessage })
+        body: JSON.stringify({ question: inputMessage, character: selectedCharacter })
       })
 
       if (!response.ok) {
@@ -52,7 +54,8 @@ const App = () => {
       const assistantMessage = {
         role: "assistant",
         content: data.answer,
-        timestamp: data.timestamp || new Date().toISOString()
+        timestamp: data.timestamp || new Date().toISOString(),
+        character: data.character || selectedCharacter
       }
       setMessages(prev => [...prev, assistantMessage])
     } catch (error) {
@@ -61,7 +64,8 @@ const App = () => {
         role: "assistant",
         content:
           "My apologies, old sport. It seems there's been a mishap with our connection. Please ensure the server is running on port 3000.",
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        character: selectedCharacter
       }
       setMessages(prev => [...prev, errorMessage])
     } finally {
@@ -73,9 +77,30 @@ const App = () => {
     setInputMessage(question)
   }
 
+  const handleCharacterChange = character => {
+    setSelectedCharacter(character)
+    // Clear messages when switching characters
+    const welcomeMessages = {
+      gatsby:
+        "Greetings, old sport! I'm Jay Gatsby, and I'm delighted you've joined me at my estate in West Egg. Pour yourself a drink and let's discuss dreams, literature, love, and the endless possibilities that tomorrow may bring. What's on your mind tonight?",
+      nick: "Hello there. I'm Nick Carraway, and I find myself reflecting on the remarkable events I've witnessed here in West Egg and East Egg. I'd be happy to share my observations about this fascinating, if troubling, world of wealth and dreams.",
+      daisy:
+        "Oh, hello darling! I'm Daisy Buchanan. Isn't it wonderful to meet someone new? I do hope we can have the most delightful conversation. Tell me, what brings you to our little corner of the world?"
+    }
+
+    setMessages([
+      {
+        role: "assistant",
+        content: welcomeMessages[character],
+        timestamp: new Date().toISOString(),
+        character: character
+      }
+    ])
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-app-background">
-      <Header />
+      <Header selectedCharacter={selectedCharacter} onCharacterChange={handleCharacterChange} />
 
       {/* Main Chat Area */}
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 flex flex-col">
@@ -86,7 +111,12 @@ const App = () => {
               message.role === "user" ? (
                 <UserMessage key={index} content={message.content} timestamp={message.timestamp} />
               ) : (
-                <AgentMessage key={index} content={message.content} timestamp={message.timestamp} />
+                <AgentMessage
+                  key={index}
+                  content={message.content}
+                  timestamp={message.timestamp}
+                  character={message.character || selectedCharacter}
+                />
               )
             )}
 
@@ -111,7 +141,9 @@ const App = () => {
           </div>
 
           {/* Suggested Questions */}
-          {messages.length === 1 && <SuggestedQuestions onQuestionSelect={handleSuggestedQuestion} />}
+          {messages.length === 1 && (
+            <SuggestedQuestions onQuestionSelect={handleSuggestedQuestion} character={selectedCharacter} />
+          )}
 
           <ChatForm
             inputMessage={inputMessage}

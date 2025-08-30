@@ -1,18 +1,26 @@
 import React from "react"
 import { format, parseISO, isValid } from "date-fns"
 
-const AgentMessage = ({ content, timestamp }) => {
+const AgentMessage = ({ content, timestamp, character = "gatsby" }) => {
   const formatTime = isoString => {
     if (!isoString) return ""
     const date = parseISO(isoString)
     return isValid(date) ? format(date, "h:mm a") : ""
   }
 
+  const characterInfo = {
+    gatsby: { name: "Jay Gatsby", avatar: "/gatsby.png" },
+    nick: { name: "Nick Carraway", avatar: "/gatsby.png" },
+    daisy: { name: "Daisy Buchanan", avatar: "/daisy.png" }
+  }
+
+  const currentCharacter = characterInfo[character] || characterInfo.gatsby
+
   return (
     <div className="flex justify-start items-start space-x-3">
       <div className="flex-shrink-0 mt-1">
         <div className="w-7 h-7 rounded-full overflow-hidden border border-yellow-500">
-          <img src="/gatsby.png" alt="Jay Gatsby" className="w-full h-full object-cover" />
+          <img src={currentCharacter.avatar} alt={currentCharacter.name} className="w-full h-full object-cover" />
         </div>
       </div>
       <div className="max-w-xs lg:max-w-md xl:max-w-lg">
