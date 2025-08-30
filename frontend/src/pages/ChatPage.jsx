@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
-import ChatForm from "./ChatForm"
-import SuggestedQuestions from "./SuggestedQuestions"
-import UserMessage from "./UserMessage"
-import AgentMessage from "./AgentMessage"
+import ChatForm from "../components/ChatForm"
+import SuggestedQuestions from "../components/SuggestedQuestions"
+import UserMessage from "../components/UserMessage"
+import AgentMessage from "../components/AgentMessage"
 
 const characters = {
   gatsby: {
@@ -27,7 +27,7 @@ const characters = {
   }
 }
 
-const ChatScreen = () => {
+const ChatPage = () => {
   const { characterId } = useParams()
   const navigate = useNavigate()
   const [messages, setMessages] = useState([])
@@ -137,7 +137,7 @@ const ChatScreen = () => {
           <div className="flex items-center justify-between">
             <button
               onClick={handleBackToSelection}
-              className="flex items-center space-x-2 px-4 py-2 text-gray-300 hover:text-yellow-500 hover:bg-app-background rounded-lg transition-colors duration-200"
+              className="flex items-center cursor-pointer space-x-2 px-4 py-2 text-gray-300 hover:text-yellow-500 hover:bg-app-background rounded-lg transition-colors duration-200"
             >
               <ArrowLeft size={20} />
               <span>Back to Characters</span>
@@ -210,4 +210,4 @@ const ChatScreen = () => {
   )
 }
 
-export default ChatScreen
+export default ChatPage

@@ -1,7 +1,7 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 
-const CharacterSelection = () => {
+const CharacterSelectionPage = () => {
   const navigate = useNavigate()
 
   const characters = [
@@ -66,7 +66,7 @@ const CharacterSelection = () => {
 
                   <p className="text-gray-400 leading-relaxed mb-6">{character.description}</p>
 
-                  <button className="w-full py-3 px-6 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-lg transition-colors duration-200 group-hover:shadow-lg">
+                  <button className="w-full cursor-pointer py-3 px-6 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-lg transition-colors duration-200 group-hover:shadow-lg">
                     Start Conversation
                   </button>
                 </div>
@@ -79,4 +79,4 @@ const CharacterSelection = () => {
   )
 }
 
-export default CharacterSelection
+export default CharacterSelectionPage
