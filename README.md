@@ -1,6 +1,6 @@
 ## Gatsby Persona Chat
 
-A sophisticated AI-powered chat application that brings the iconic Jay Gatsby character to life. Chat with the legendary figure from F. Scott Fitzgerald's "The Great Gatsby" in an immersive, beautifully designed interface.
+A sophisticated AI-powered chat application that brings three iconic characters from F. Scott Fitzgerald's "The Great Gatsby" to life. Choose between Jay Gatsby, Nick Carraway, or Daisy Buchanan for unique, character-specific conversations in an immersive, beautifully designed interface.
 
 ### 🚀 Tech Stack
 
@@ -23,12 +23,15 @@ A sophisticated AI-powered chat application that brings the iconic Jay Gatsby ch
 
 #### ✨ Features
 
-- **Interactive Chat Interface**: Real-time messaging with Jay Gatsby
-- **Authentic Personality**: AI responses capture Gatsby's unique voice and mannerisms
+- **Multi-Character Experience**: Choose between Jay Gatsby, Nick Carraway, or Daisy Buchanan
+- **Interactive Chat Interface**: Real-time messaging with any character
+- **Authentic Personalities**: Each character has distinct voice, mannerisms, and perspectives
+- **Character Selector**: Elegant dropdown in header to switch between characters
+- **Dynamic Suggested Questions**: Tailored conversation starters based on selected character
+- **Character-Specific Welcome Messages**: Personalized greetings for each character
 - **Modern UI/UX**: Clean, responsive design with smooth animations
 - **Message Timestamps**: Formatted timestamps using date-fns
-- **Suggested Questions**: Conversation starters to guide interactions
-- **Avatar Integration**: Visual representation of Gatsby in messages
+- **Avatar Integration**: Visual representation of characters in messages
 - **Smooth Gradients**: Custom CSS utilities for beautiful button effects
 - **Auto-scroll**: Automatic scrolling to keep latest messages visible
 - **Error Handling**: Graceful error handling and user feedback
