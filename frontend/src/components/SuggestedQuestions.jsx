@@ -2,10 +2,8 @@ import React from "react"
 
 const SuggestedQuestions = ({ onQuestionSelect }) => {
   const suggestedQuestions = [
-    "Tell me about your dreams and the green light, Gatsby",
-    "What was it like at your magnificent parties?",
-    "Share your thoughts on love and the American Dream",
-    "What do you think about hope and the future?"
+    "Do you believe one can truly repeat the past?",
+    "What was it like at your magnificent parties?"
   ]
 
   return (
@@ -16,7 +14,7 @@ const SuggestedQuestions = ({ onQuestionSelect }) => {
           <button
             key={index}
             onClick={() => onQuestionSelect(question)}
-            className="text-left p-3 text-sm text-gray-300 rounded-lg hover:opacity-80 transition-opacity border"
+            className="text-left p-3 text-sm text-gray-300 cursor-pointer rounded-lg hover:opacity-80 transition-opacity border"
             style={{ backgroundColor: "#212529", borderColor: "#3a3f44" }}
           >
             {question}

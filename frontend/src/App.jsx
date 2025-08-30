@@ -70,10 +70,10 @@ const App = () => {
       <Header />
 
       {/* Main Chat Area */}
-      <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-6 flex flex-col">
+      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 flex flex-col">
         {/* Messages Container */}
         <div
-          className="flex-1 rounded-lg shadow-sm border mb-6 flex flex-col"
+          className="flex-1 rounded-lg shadow-sm border flex flex-col"
           style={{ backgroundColor: "#272b2f", borderColor: "#3a3f44" }}
         >
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
