@@ -134,7 +134,7 @@ const ChatPage = () => {
       <ChatHeader character={currentCharacter} onBackClick={handleBackToSelection} />
 
       {/* Main Chat Area */}
-      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 flex flex-col">
+      <main className="flex-1 max-w-3xl mx-auto w-full sm:px-4 sm:py-6 border-t border-neutral-700 sm:border-t-transparent flex flex-col">
         {/* Messages Container */}
         <div className="flex-1 rounded-lg shadow-sm border flex flex-col bg-app-level1 border-app-border">
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
