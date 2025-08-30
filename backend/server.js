@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import { config } from "./config/config.js"
-import { getGatsbyResponse } from "./services/openaiService.js"
+import { getGatsbyResponse, getCharacterResponse } from "./services/openaiService.js"
 import { setupRoutes } from "./routes/routes.js"
 
 const app = express()
@@ -9,7 +9,7 @@ app.use(cors())
 app.use(express.json())
 
 // Setup routes
-setupRoutes(app, { getGatsbyResponse })
+setupRoutes(app, { getGatsbyResponse, getCharacterResponse })
 
 // Start server
 app.listen(config.port, () => {

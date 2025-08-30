@@ -1,6 +1,21 @@
 // Pure validation function
-const validateQuestion = body =>
-  !body?.question ? { isValid: false, error: "Question is required" } : { isValid: true }
+const validateRequest = body => {
+  if (!body?.question) {
+    return { isValid: false, error: "Question is required" }
+  }
+
+  const validCharacters = ["gatsby", "nick", "daisy"]
+  const character = body.character || "gatsby"
+
+  if (!validCharacters.includes(character)) {
+    return {
+      isValid: false,
+      error: `Invalid character: ${character}. Valid characters are: ${validCharacters.join(", ")}`
+    }
+  }
+
+  return { isValid: true, character }
+}
 
 // Higher-order function to setup routes with chat service
 export const setupRoutes = (app, chatService) => {
@@ -9,16 +24,35 @@ export const setupRoutes = (app, chatService) => {
     res.json({ status: "OK", message: "Great Gatsby AI is running" })
   })
 
-  // Main Gatsby chat endpoint
-  app.post("/api/gatsby/ask", async (req, res) => {
+  // Main character chat endpoint
+  app.post("/api/character/ask", async (req, res) => {
     try {
-      const validation = validateQuestion(req.body)
+      const validation = validateRequest(req.body)
 
       if (!validation.isValid) {
         return res.status(400).json({ error: validation.error })
       }
 
-      const response = await chatService.getGatsbyResponse(req.body.question)
+      const response = await chatService.getCharacterResponse(req.body.question, validation.character)
+      res.json(response)
+    } catch (error) {
+      console.error("Error processing character conversation:", error)
+      res.status(500).json({
+        error: "Failed to process your conversation"
+      })
+    }
+  })
+
+  // Backwards compatibility - Gatsby-specific endpoint
+  app.post("/api/gatsby/ask", async (req, res) => {
+    try {
+      const validation = validateRequest(req.body)
+
+      if (!validation.isValid) {
+        return res.status(400).json({ error: validation.error })
+      }
+
+      const response = await chatService.getCharacterResponse(req.body.question, "gatsby")
       res.json(response)
     } catch (error) {
       console.error("Error processing Gatsby conversation:", error)
@@ -35,9 +69,16 @@ export const setupRoutes = (app, chatService) => {
       version: "1.0.0",
       endpoints: {
         health: "GET /health",
-        askGatsby: "POST /api/gatsby/ask"
+        askCharacter: "POST /api/character/ask",
+        askGatsby: "POST /api/gatsby/ask (legacy)"
       },
       usage: {
+        askCharacter: {
+          method: "POST",
+          url: "/api/character/ask",
+          body: { question: "string", character: "gatsby|nick|daisy" },
+          example: { question: "Tell me about your dreams", character: "gatsby" }
+        },
         askGatsby: {
           method: "POST",
           url: "/api/gatsby/ask",
