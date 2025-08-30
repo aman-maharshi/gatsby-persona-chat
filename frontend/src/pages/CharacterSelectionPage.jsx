@@ -49,9 +49,9 @@ const CharacterSelectionPage = () => {
               <div
                 key={character.id}
                 onClick={() => handleCharacterSelect(character.id)}
-                className="relative cursor-pointer rounded-xl border-2 border-app-border bg-app-level1 p-8 transition-all duration-300 hover:scale-105 hover:border-yellow-400/50 hover:shadow-xl hover:shadow-yellow-500/10 group"
+                className="relative cursor-pointer rounded-xl border-2 border-app-border bg-app-level1 p-8 transition-all duration-300 hover:scale-105 hover:border-yellow-400/50 hover:shadow-xl hover:shadow-yellow-500/10 group flex flex-col h-full"
               >
-                <div className="text-center">
+                <div className="text-center flex-1 flex flex-col">
                   <div className="flex justify-center mb-6">
                     <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-400 group-hover:border-yellow-500 transition-colors duration-300">
                       <img src={character.avatar} alt={character.name} className="w-full h-full object-cover" />
@@ -64,9 +64,9 @@ const CharacterSelectionPage = () => {
 
                   <p className="text-lg text-yellow-400 mb-4 font-medium">{character.subtitle}</p>
 
-                  <p className="text-gray-400 leading-relaxed mb-6">{character.description}</p>
+                  <p className="text-gray-400 leading-relaxed mb-6 flex-1">{character.description}</p>
 
-                  <button className="w-full cursor-pointer py-3 px-6 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-lg transition-colors duration-200 group-hover:shadow-lg">
+                  <button className="w-full cursor-pointer py-3 px-6 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-lg transition-colors duration-200 group-hover:shadow-lg mt-auto">
                     Start Conversation
                   </button>
                 </div>
