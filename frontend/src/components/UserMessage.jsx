@@ -9,7 +9,7 @@ const UserMessage = ({ content, timestamp }) => {
   }
 
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-end message-appear">
       <div className="max-w-xs lg:max-w-md xl:max-w-lg">
         <div className="px-4 py-3 rounded-lg bg-yellow-500 text-gray-900 rounded-br-none">
           <p className="whitespace-pre-wrap">{content}</p>

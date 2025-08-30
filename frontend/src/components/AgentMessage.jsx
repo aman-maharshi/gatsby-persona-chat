@@ -17,7 +17,7 @@ const AgentMessage = ({ content, timestamp, character = "gatsby" }) => {
   const currentCharacter = characterInfo[character] || characterInfo.gatsby
 
   return (
-    <div className="flex justify-start items-start space-x-3">
+    <div className="flex justify-start items-start space-x-3 message-appear">
       <div className="flex-shrink-0 mt-1">
         <div className="w-7 h-7 rounded-full overflow-hidden border border-yellow-500">
           <img src={currentCharacter.avatar} alt={currentCharacter.name} className="w-full h-full object-cover" />

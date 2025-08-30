@@ -13,3 +13,20 @@
     border-color: #3a3f44;
   }
 }
+
+@layer components {
+  .message-appear {
+    animation: messageAppear 0.5s ease-out forwards;
+  }
+
+  @keyframes messageAppear {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
