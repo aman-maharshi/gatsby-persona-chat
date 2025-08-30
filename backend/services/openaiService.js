@@ -37,8 +37,3 @@ export const getCharacterResponse = async (question, character = "gatsby") => {
     timestamp: new Date().toISOString()
   }
 }
-
-// Backwards compatibility - can be removed later
-export const getGatsbyResponse = async question => {
-  return getCharacterResponse(question, "gatsby")
-}
