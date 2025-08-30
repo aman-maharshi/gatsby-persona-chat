@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react"
 import Header from "./components/Header"
 import ChatForm from "./components/ChatForm"
 import SuggestedQuestions from "./components/SuggestedQuestions"
+import UserMessage from "./components/UserMessage"
+import AgentMessage from "./components/AgentMessage"
 
 const App = () => {
   const [messages, setMessages] = useState([
@@ -74,19 +76,13 @@ const App = () => {
         {/* Messages Container */}
         <div className="flex-1 rounded-lg shadow-sm border flex flex-col bg-app-level1 border-app-border">
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
-            {messages.map((message, index) => (
-              <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div
-                  className={`max-w-xs lg:max-w-md xl:max-w-lg px-4 py-3 rounded-lg ${
-                    message.role === "user"
-                      ? "bg-yellow-500 text-gray-900 rounded-br-none"
-                      : "rounded-bl-none text-gray-200 bg-app-background"
-                  }`}
-                >
-                  <p className="whitespace-pre-wrap">{message.content}</p>
-                </div>
-              </div>
-            ))}
+            {messages.map((message, index) =>
+              message.role === "user" ? (
+                <UserMessage key={index} content={message.content} />
+              ) : (
+                <AgentMessage key={index} content={message.content} />
+              )
+            )}
 
             {isLoading && (
               <div className="flex justify-start">
