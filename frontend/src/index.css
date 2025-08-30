@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+@layer utilities {
+  .bg-app-background {
+    background-color: #212529;
+  }
+
+  .bg-app-level1 {
+    background-color: #272b2f;
+  }
+
+  .border-app-border {
+    border-color: #3a3f44;
+  }
+}

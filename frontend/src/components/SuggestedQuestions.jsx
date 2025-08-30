@@ -14,8 +14,7 @@ const SuggestedQuestions = ({ onQuestionSelect }) => {
           <button
             key={index}
             onClick={() => onQuestionSelect(question)}
-            className="text-left p-3 text-sm text-gray-300 cursor-pointer rounded-lg hover:opacity-80 transition-opacity border"
-            style={{ backgroundColor: "#212529", borderColor: "#3a3f44" }}
+            className="text-left p-3 text-sm text-gray-300 cursor-pointer rounded-lg hover:opacity-80 transition-opacity border bg-app-background border-app-border"
           >
             {question}
           </button>

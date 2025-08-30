@@ -66,16 +66,13 @@ const App = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#212529" }}>
+    <div className="min-h-screen flex flex-col bg-app-background">
       <Header />
 
       {/* Main Chat Area */}
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 flex flex-col">
         {/* Messages Container */}
-        <div
-          className="flex-1 rounded-lg shadow-sm border flex flex-col"
-          style={{ backgroundColor: "#272b2f", borderColor: "#3a3f44" }}
-        >
+        <div className="flex-1 rounded-lg shadow-sm border flex flex-col bg-app-level1 border-app-border">
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
             {messages.map((message, index) => (
               <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
@@ -83,9 +80,8 @@ const App = () => {
                   className={`max-w-xs lg:max-w-md xl:max-w-lg px-4 py-3 rounded-lg ${
                     message.role === "user"
                       ? "bg-yellow-500 text-gray-900 rounded-br-none"
-                      : "rounded-bl-none text-gray-200"
+                      : "rounded-bl-none text-gray-200 bg-app-background"
                   }`}
-                  style={message.role === "assistant" ? { backgroundColor: "#212529" } : {}}
                 >
                   <p className="whitespace-pre-wrap">{message.content}</p>
                 </div>
@@ -94,7 +90,7 @@ const App = () => {
 
             {isLoading && (
               <div className="flex justify-start">
-                <div className="rounded-lg rounded-bl-none px-4 py-3" style={{ backgroundColor: "#212529" }}>
+                <div className="rounded-lg rounded-bl-none px-4 py-3 bg-app-background">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce"></div>
                     <div

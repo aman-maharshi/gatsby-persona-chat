@@ -2,7 +2,7 @@ import React from "react"
 
 const Header = () => {
   return (
-    <header className="shadow-sm border-b" style={{ backgroundColor: "#272b2f", borderColor: "#3a3f44" }}>
+    <header className="shadow-sm border-b bg-app-level1 border-app-border">
       <div className="max-w-4xl mx-auto px-4 py-6">
         <div className="flex items-center space-x-3">
           <div className="flex-shrink-0">
