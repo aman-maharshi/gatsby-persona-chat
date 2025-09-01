@@ -1,5 +1,5 @@
-import { getCharacterResponse } from "@/lib/aiService"
-import { validateRequest } from "@/lib/validation"
+import { getCharacterResponse } from "@/services/aiService"
+import { validateRequest } from "@/services/validation"
 
 export async function POST(request) {
   try {
