@@ -5,6 +5,7 @@ import SuggestedQuestions from "../components/SuggestedQuestions"
 import UserMessage from "../components/UserMessage"
 import AgentMessage from "../components/AgentMessage"
 import ChatHeader from "../components/ChatHeader"
+import { characterApiService } from "../lib/apiService"
 
 const characters = {
   gatsby: {
@@ -70,19 +71,7 @@ const ChatPage = () => {
     setIsLoading(true)
 
     try {
-      const response = await fetch("http://localhost:3000/api/character/ask", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ question: inputMessage, character: characterId })
-      })
-
-      if (!response.ok) {
-        throw new Error("Failed to get response")
-      }
-
-      const data = await response.json()
+      const data = await characterApiService.askCharacter(inputMessage, characterId)
       const assistantMessage = {
         role: "assistant",
         content: data.answer,
@@ -95,7 +84,9 @@ const ChatPage = () => {
       const errorMessage = {
         role: "assistant",
         content:
-          "My apologies, old sport. It seems there's been a mishap with our connection. Please ensure the server is running on port 3000.",
+          error.message === "Network error: Unable to connect to server"
+            ? "My apologies, old sport. It seems there's been a mishap with our connection. Please ensure the server is running on port 3000."
+            : `I apologize, but I encountered an issue: ${error.message}`,
         timestamp: new Date().toISOString(),
         character: characterId
       }
