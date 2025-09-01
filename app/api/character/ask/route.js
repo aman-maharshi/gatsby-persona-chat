@@ -1,4 +1,4 @@
-import { getCharacterResponse } from "@/lib/openaiService"
+import { getCharacterResponse } from "@/lib/aiService"
 import { validateRequest } from "@/lib/validation"
 
 export async function POST(request) {

@@ -1,4 +1,4 @@
-import { getCharacterResponseWithContext } from "@/lib/openaiService"
+import { getCharacterResponseWithContext } from "@/lib/aiService"
 import { validateRequest } from "@/lib/validation"
 
 export async function POST(request) {
