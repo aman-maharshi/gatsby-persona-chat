@@ -137,7 +137,7 @@ const ChatPage = () => {
       <main className="flex-1 max-w-3xl mx-auto w-full sm:px-4 sm:py-6 border-t border-neutral-700 sm:border-t-transparent flex flex-col">
         {/* Messages Container */}
         <div className="flex-1 rounded-lg shadow-sm border flex flex-col bg-app-level1 border-app-border">
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div className="flex-1 overflow-y-auto p-6 space-y-4 max-h-[80vh] sm:max-h-[72vh]">
             {messages.map((message, index) =>
               message.role === "user" ? (
                 <UserMessage key={index} content={message.content} timestamp={message.timestamp} />
@@ -171,17 +171,19 @@ const ChatPage = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Suggested Questions */}
-          {messages.length === 1 && (
-            <SuggestedQuestions onQuestionSelect={handleSuggestedQuestion} character={characterId} />
-          )}
+          <div className="mt-auto">
+            {/* Suggested Questions */}
+            {messages.length === 1 && (
+              <SuggestedQuestions onQuestionSelect={handleSuggestedQuestion} character={characterId} />
+            )}
 
-          <ChatForm
-            inputMessage={inputMessage}
-            setInputMessage={setInputMessage}
-            handleSendMessage={handleSendMessage}
-            isLoading={isLoading}
-          />
+            <ChatForm
+              inputMessage={inputMessage}
+              setInputMessage={setInputMessage}
+              handleSendMessage={handleSendMessage}
+              isLoading={isLoading}
+            />
+          </div>
         </div>
       </main>
     </div>
