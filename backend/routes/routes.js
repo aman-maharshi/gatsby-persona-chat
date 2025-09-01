@@ -43,6 +43,32 @@ export const setupRoutes = (app, chatService) => {
     }
   })
 
+  // New endpoint for character chat with conversation context
+  app.post("/api/character/ask-with-context", async (req, res) => {
+    try {
+      const validation = validateRequest(req.body)
+
+      if (!validation.isValid) {
+        return res.status(400).json({ error: validation.error })
+      }
+
+      // Extract conversation history from request body
+      const { question, character, conversationHistory = [] } = req.body
+
+      const response = await chatService.getCharacterResponseWithContext(
+        question,
+        validation.character,
+        conversationHistory
+      )
+      res.json(response)
+    } catch (error) {
+      console.error("Error processing character conversation with context:", error)
+      res.status(500).json({
+        error: "Failed to process your conversation"
+      })
+    }
+  })
+
   // Backwards compatibility - Gatsby-specific endpoint
   app.post("/api/gatsby/ask", async (req, res) => {
     try {
@@ -70,6 +96,7 @@ export const setupRoutes = (app, chatService) => {
       endpoints: {
         health: "GET /health",
         askCharacter: "POST /api/character/ask",
+        askCharacterWithContext: "POST /api/character/ask-with-context",
         askGatsby: "POST /api/gatsby/ask (legacy)"
       },
       usage: {
@@ -78,6 +105,19 @@ export const setupRoutes = (app, chatService) => {
           url: "/api/character/ask",
           body: { question: "string", character: "gatsby|nick|daisy" },
           example: { question: "Tell me about your dreams", character: "gatsby" }
+        },
+        askCharacterWithContext: {
+          method: "POST",
+          url: "/api/character/ask-with-context",
+          body: { question: "string", character: "gatsby|nick|daisy", conversationHistory: "array" },
+          example: {
+            question: "What do you think about that?",
+            character: "gatsby",
+            conversationHistory: [
+              { role: "user", content: "Tell me about your dreams" },
+              { role: "assistant", content: "I dream of Daisy..." }
+            ]
+          }
         },
         askGatsby: {
           method: "POST",
