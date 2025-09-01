@@ -9,27 +9,7 @@ import UserMessage from "@/components/UserMessage"
 import AgentMessage from "@/components/AgentMessage"
 import ChatHeader from "@/components/ChatHeader"
 import { characterApiService } from "@/lib/apiService"
-
-const characters = {
-  gatsby: {
-    name: "Jay Gatsby",
-    avatar: "/gatsby.png",
-    welcomeMessage:
-      "Greetings, old sport! I'm Jay Gatsby, and I'm delighted you've joined me at my estate in West Egg. Pour yourself a drink and let's discuss dreams, literature, love, and the endless possibilities that tomorrow may bring. What's on your mind tonight?"
-  },
-  nick: {
-    name: "Nick Carraway",
-    avatar: "/nick.png",
-    welcomeMessage:
-      "Hello there. I'm Nick Carraway, and I find myself reflecting on the remarkable events I've witnessed here in West Egg and East Egg. I'd be happy to share my observations about this fascinating, if troubling, world of wealth and dreams."
-  },
-  daisy: {
-    name: "Daisy Buchanan",
-    avatar: "/daisy.png",
-    welcomeMessage:
-      "Oh, hello darling! I'm Daisy Buchanan. Isn't it wonderful to meet someone new? I do hope we can have the most delightful conversation. Tell me, what brings you to our little corner of the world?"
-  }
-}
+import { characters } from "@/constants"
 
 export default function ChatPage({ params }) {
   const { characterId } = use(params)
@@ -39,7 +19,7 @@ export default function ChatPage({ params }) {
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef(null)
 
-  const currentCharacter = characters[characterId]
+  const currentCharacter = characters.find(char => char.id === characterId)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -51,7 +31,7 @@ export default function ChatPage({ params }) {
 
   // Initialize with welcome message when component mounts
   useEffect(() => {
-    const character = characters[characterId]
+    const character = characters.find(char => char.id === characterId)
     if (character) {
       setMessages([
         {

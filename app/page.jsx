@@ -1,33 +1,10 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { characters } from "../constants"
 
 export default function Home() {
   const router = useRouter()
-
-  const characters = [
-    {
-      id: "gatsby",
-      name: "Jay Gatsby",
-      subtitle: "Welcome to West Egg, old sport",
-      description: "The enigmatic millionaire with dreams of the green light",
-      avatar: "/gatsby.png"
-    },
-    {
-      id: "nick",
-      name: "Nick Carraway",
-      subtitle: "Observer from the Midwest",
-      description: "The thoughtful narrator witnessing the American Dream",
-      avatar: "/nick.png"
-    },
-    {
-      id: "daisy",
-      name: "Daisy Buchanan",
-      subtitle: "The voice full of money",
-      description: "The beautiful socialite caught between love and wealth",
-      avatar: "/daisy.png"
-    }
-  ]
 
   const handleCharacterSelect = characterId => {
     router.push(`/chat/${characterId}`)
