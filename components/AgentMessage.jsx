@@ -1,6 +1,7 @@
 "use client"
 
 import { format, parseISO, isValid } from "date-fns"
+import { characters } from "@/constants"
 
 const AgentMessage = ({ content, timestamp, character = "gatsby" }) => {
   const formatTime = isoString => {
@@ -13,13 +14,7 @@ const AgentMessage = ({ content, timestamp, character = "gatsby" }) => {
     }
   }
 
-  const characterInfo = {
-    gatsby: { name: "Jay Gatsby", avatar: "/gatsby.png" },
-    nick: { name: "Nick Carraway", avatar: "/nick.png" },
-    daisy: { name: "Daisy Buchanan", avatar: "/daisy.png" }
-  }
-
-  const currentCharacter = characterInfo[character] || characterInfo.gatsby
+  const currentCharacter = characters.find(char => char.id === character) || characters[0]
 
   return (
     <div className="flex justify-start items-start space-x-3 message-appear">
