@@ -12,7 +12,7 @@ const ChatHeader = ({ character, onBackClick }) => {
             className="flex items-center cursor-pointer space-x-2 px-4 py-2 text-gray-300 hover:text-yellow-500 hover:bg-app-background rounded-lg transition-colors duration-200"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span>Back to Characters</span>
+            <span className="hidden md:block">Back to Characters</span>
           </button>
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-yellow-500">
