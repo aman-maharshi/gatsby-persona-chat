@@ -1,0 +1,32 @@
+"use client"
+
+import { ArrowLeft } from "lucide-react"
+
+const ChatHeader = ({ character, onBackClick }) => {
+  return (
+    <header className="shadow-sm border-b bg-app-level1 border-app-border">
+      <div className="max-w-3xl mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <button
+            onClick={onBackClick}
+            className="flex items-center cursor-pointer space-x-2 px-4 py-2 text-gray-300 hover:text-yellow-500 hover:bg-app-background rounded-lg transition-colors duration-200"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>Back to Characters</span>
+          </button>
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-yellow-500">
+              <img src={character.avatar} alt={character.name} className="w-full h-full object-cover" />
+            </div>
+            <div>
+              <h1 className="text-lg font-semibold text-white">{character.name}</h1>
+              <p className="text-sm text-gray-300">Online</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  )
+}
+
+export default ChatHeader

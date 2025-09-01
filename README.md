@@ -2,78 +2,132 @@
 
 A sophisticated AI-powered chat application that brings three iconic characters from F. Scott Fitzgerald's "The Great Gatsby" to life. Choose between Jay Gatsby, Nick Carraway, or Daisy Buchanan for unique, character-specific conversations in an immersive, beautifully designed interface.
 
-### 🚀 Tech Stack
+## 🚀 **Features**
 
-#### Frontend
+### **Backend API**
 
-- **React 19** - Modern UI library with hooks and functional components
-- **Vite** - Lightning-fast build tool and dev server
-- **Tailwind CSS 4** - Utility-first CSS framework with custom utilities
-- **Lucide React** - Beautiful, customizable icons
-- **date-fns** - Modern JavaScript date utility library
-- **ESLint** - Code linting and quality assurance
+- ✅ Character validation (Gatsby, Nick, Daisy)
+- ✅ Conversation context support
+- ✅ Error handling and validation
+- ✅ Health check endpoint
+- ✅ API documentation
+- ✅ Legacy endpoint support
 
-#### Backend
+### **Frontend UI**
 
-- **Node.js** - JavaScript runtime environment
-- **Express.js** - Fast, minimalist web framework
-- **OpenAI API** - GPT-powered conversation engine
-- **CORS** - Cross-origin resource sharing middleware
-- **dotenv** - Environment variable management
+- ✅ Character selection page
+- ✅ Real-time chat interface
+- ✅ Suggested questions
+- ✅ Responsive design
+- ✅ Dark theme with Gatsby aesthetics
+- ✅ Message timestamps
+- ✅ Loading states
 
-#### ✨ Features
+## 🛠️ **Setup**
 
-- **Multi-Character Experience**: Choose between Jay Gatsby, Nick Carraway, or Daisy Buchanan
-- **Interactive Chat Interface**: Real-time messaging with any character
-- **Authentic Personalities**: Each character has distinct voice, mannerisms, and perspectives
-- **Character Selector**: Elegant dropdown in header to switch between characters
-- **Dynamic Suggested Questions**: Tailored conversation starters based on selected character
-- **Character-Specific Welcome Messages**: Personalized greetings for each character
-- **Modern UI/UX**: Clean, responsive design with smooth animations
-- **Message Timestamps**: Formatted timestamps using date-fns
-- **Avatar Integration**: Visual representation of characters in messages
-- **Smooth Gradients**: Custom CSS utilities for beautiful button effects
-- **Auto-scroll**: Automatic scrolling to keep latest messages visible
-- **Error Handling**: Graceful error handling and user feedback
-
-#### Prerequisites
-
-- Node.js (v22+ recommended)
-- npm or yarn
-- OpenAI API key
-
-#### Backend Setup
+1. **Install dependencies:**
 
 ```bash
-cd backend
 npm install
-# Configure your OpenAI API key in .env
-npm run dev
 ```
 
-#### Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The application will be available at:
-
-- Frontend: `http://localhost:5173`
-- Backend: `http://localhost:3000`
-
-### 🔧 Configuration
-
-Create a `.env` file in the backend directory:
+2. **Create a `.env` file in the root directory with your API keys:**
 
 ```env
-OPENAI_API_KEY=your_api_key_here
+# OpenAI/Gemini Configuration
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_BASE_URL=gemini_base_url_here
+GEMINI_MODEL=gemini_model_here
 ```
 
-### 📝 API Endpoints
+3. **Run the development server:**
 
-- `GET /health` - Health check
-- `POST /api/gatsby/ask` - Send message to Gatsby
-- `GET /api` - API documentation
+```bash
+npm run dev
+```
+
+## 🎭 **Available Characters**
+
+- **Jay Gatsby** - The enigmatic millionaire with dreams of the green light
+- **Nick Carraway** - The thoughtful narrator witnessing the American Dream
+- **Daisy Buchanan** - The beautiful socialite caught between love and wealth
+
+## 🌐 **API Endpoints**
+
+### **Health Check**
+
+- **GET** `/api/health` - Check if the API is running
+
+### **Character Chat**
+
+- **POST** `/api/character/ask` - Ask a character a question
+- **POST** `/api/character/ask-with-context` - Ask with conversation history
+
+### **API Documentation**
+
+- **GET** `/api` - View all available endpoints and usage examples
+
+## 📱 **Frontend Routes**
+
+- **`/`** - Character selection page
+- **`/chat/[characterId]`** - Chat interface with specific character
+
+## 🎨 **UI Components**
+
+- **CharacterSelectionPage** - Main landing page with character cards
+- **ChatPage** - Full chat interface with message history
+- **ChatForm** - Message input and send functionality
+- **ChatHeader** - Navigation and character info
+- **UserMessage** - User message display
+- **AgentMessage** - Character response display
+- **SuggestedQuestions** - Quick question suggestions
+
+## 🔧 **Technical Stack**
+
+- **Frontend**: Next.js 15, React 19, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **AI**: OpenAI/Gemini API integration
+- **Styling**: Custom CSS variables, Tailwind CSS
+- **Icons**: SVG icons (no external icon library)
+
+## 🚀 **Usage Examples**
+
+### **Basic Character Chat**
+
+```bash
+curl -X POST http://localhost:3000/api/character/ask \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Tell me about your dreams", "character": "gatsby"}'
+```
+
+### **Chat with Context**
+
+```bash
+curl -X POST http://localhost:3000/api/character/ask-with-context \
+  -H "Content-Type: application/json" \
+  -d '{
+    "question": "What do you think about that?",
+    "character": "gatsby",
+    "conversationHistory": [
+      {"role": "user", "content": "Tell me about your dreams"},
+      {"role": "assistant", "content": "I dream of Daisy..."}
+    ]
+  }'
+```
+
+## 🎯 **Getting Started**
+
+1. Start the development server: `npm run dev`
+2. Open [http://localhost:3000](http://localhost:3000)
+3. Select a character to begin chatting
+4. Use suggested questions or type your own
+5. Enjoy conversations with Gatsby, Nick, and Daisy!
+
+## 🔍 **Development**
+
+- **API Routes**: Located in `app/api/`
+- **Components**: Located in `components/`
+- **Services**: Located in `lib/`
+- **Styling**: Custom CSS in `app/globals.css`
+
+The application is now a complete full-stack Next.js app with integrated backend API and frontend UI!
