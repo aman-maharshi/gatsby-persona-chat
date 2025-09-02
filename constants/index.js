@@ -59,7 +59,8 @@ export const characters = [
     description: "The enigmatic millionaire with dreams of the green light",
     avatar: "/gatsby.png",
     welcomeMessage:
-      "Greetings, old sport! I'm Jay Gatsby, and I'm delighted you've joined me at my estate in West Egg. Pour yourself a drink and let's discuss dreams, literature, love, and the endless possibilities that tomorrow may bring. What's on your mind tonight?"
+      "Greetings, old sport! I'm Jay Gatsby, and I'm delighted you've joined me at my estate in West Egg. Pour yourself a drink and let's discuss dreams, literature, love, and the endless possibilities that tomorrow may bring. What's on your mind tonight?",
+    inputPlaceholder: "What's on your mind, old sport?"
   },
   {
     id: "nick",
@@ -68,7 +69,8 @@ export const characters = [
     description: "The thoughtful narrator witnessing the American Dream",
     avatar: "/nick.png",
     welcomeMessage:
-      "Hello there. I'm Nick Carraway, and I find myself reflecting on the remarkable events I've witnessed here in West Egg and East Egg. I'd be happy to share my observations about this fascinating, if troubling, world of wealth and dreams."
+      "Hello there. I'm Nick Carraway, and I find myself reflecting on the remarkable events I've witnessed here in West Egg and East Egg. I'd be happy to share my observations about this fascinating, if troubling, world of wealth and dreams.",
+    inputPlaceholder: "Go ahead, I’m curious to hear your side of things."
   },
   {
     id: "daisy",
@@ -77,6 +79,7 @@ export const characters = [
     description: "The beautiful socialite caught between love and wealth",
     avatar: "/daisy.png",
     welcomeMessage:
-      "Oh, hello darling! I'm Daisy Buchanan. Isn't it wonderful to meet someone new? I do hope we can have the most delightful conversation. Tell me, what brings you to our little corner of the world?"
+      "Oh, hello darling! I'm Daisy Buchanan. Isn't it wonderful to meet someone new? I do hope we can have the most delightful conversation. Tell me, what brings you to our little corner of the world?",
+    inputPlaceholder: "Tell me something lovely, won’t you?"
   }
 ]

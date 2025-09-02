@@ -17,9 +17,11 @@ export default function ChatPage({ params }) {
   const [messages, setMessages] = useState([])
   const [inputMessage, setInputMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [tokenCount, setTokenCount] = useState(100)
   const messagesEndRef = useRef(null)
 
   const currentCharacter = characters.find(char => char.id === characterId)
+  const isChatDisabled = tokenCount <= 0
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -46,7 +48,7 @@ export default function ChatPage({ params }) {
 
   const handleSendMessage = async e => {
     e.preventDefault()
-    if (!inputMessage.trim() || isLoading) return
+    if (!inputMessage.trim() || isLoading || isChatDisabled) return
 
     const userMessage = { role: "user", content: inputMessage, timestamp: new Date().toISOString() }
     setMessages(prev => [...prev, userMessage])
@@ -62,6 +64,7 @@ export default function ChatPage({ params }) {
         character: data.character || characterId
       }
       setMessages(prev => [...prev, assistantMessage])
+      setTokenCount(prev => Math.max(0, prev - 25))
     } catch (error) {
       console.error("Error:", error)
       const errorMessage = {
@@ -108,7 +111,7 @@ export default function ChatPage({ params }) {
 
   return (
     <div className="min-h-screen flex flex-col bg-app-background">
-      <ChatHeader character={currentCharacter} onBackClick={handleBackToSelection} />
+      <ChatHeader character={currentCharacter} onBackClick={handleBackToSelection} tokenCount={tokenCount} />
 
       {/* Main Chat Area */}
       <main className="flex-1 max-w-3xl mx-auto w-full sm:px-4 sm:py-6 border-t border-neutral-700 sm:border-t-transparent flex flex-col">
@@ -150,7 +153,7 @@ export default function ChatPage({ params }) {
 
           <div className="mt-auto">
             {/* Suggested Questions */}
-            {messages.length === 1 && (
+            {messages.length === 1 && !isChatDisabled && (
               <SuggestedQuestions onQuestionSelect={handleSuggestedQuestion} character={characterId} />
             )}
 
@@ -159,6 +162,8 @@ export default function ChatPage({ params }) {
               setInputMessage={setInputMessage}
               handleSendMessage={handleSendMessage}
               isLoading={isLoading}
+              disabled={isChatDisabled}
+              inputPlaceholder={currentCharacter.inputPlaceholder}
             />
           </div>
         </div>
