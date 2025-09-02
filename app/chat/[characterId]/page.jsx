@@ -11,23 +11,28 @@ import ChatHeader from "@/components/ChatHeader"
 import { characterApiService } from "@/lib/apiService"
 import { characters } from "@/constants"
 import TokenDisplay from "@/components/TokenDisplay"
+import useChatStore from "@/store/chatStore"
 
 export default function ChatPage({ params }) {
   const { characterId } = use(params)
   const router = useRouter()
-  const [messages, setMessages] = useState([])
   const [inputMessage, setInputMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [tokenCount, setTokenCount] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("tokenCount")
-      return saved ? parseInt(saved, 10) : 100
-    }
-    return 100
-  })
   const messagesEndRef = useRef(null)
 
-  const currentCharacter = characters.find(char => char.id === characterId)
+  // Use chatStore for state management
+  const {
+    tokenCount,
+    currentCharacter,
+    addMessage,
+    setCurrentCharacter,
+    decrementTokenCount,
+    getMessagesForCharacter
+  } = useChatStore()
+
+  // Get messages for current character
+  const messages = getMessagesForCharacter(characterId)
+
   const isChatDisabled = tokenCount <= 0
 
   const scrollToBottom = () => {
@@ -38,34 +43,34 @@ export default function ChatPage({ params }) {
     scrollToBottom()
   }, [messages])
 
-  // Save tokenCount to localStorage whenever it changes
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("tokenCount", tokenCount.toString())
-    }
-  }, [tokenCount])
-
-  // Initialize with welcome message when component mounts
+  // Initialize character and welcome message when component mounts
   useEffect(() => {
     const character = characters.find(char => char.id === characterId)
     if (character) {
-      setMessages([
-        {
-          role: "assistant",
-          content: character.welcomeMessage,
-          timestamp: new Date().toISOString(),
-          character: characterId
-        }
-      ])
+      setCurrentCharacter(character)
+
+      // Only add welcome message if no messages exist for this character
+      const characterMessages = getMessagesForCharacter(characterId)
+      if (characterMessages.length === 0) {
+        addMessage(
+          {
+            role: "assistant",
+            content: character.welcomeMessage,
+            timestamp: new Date().toISOString(),
+            character: characterId
+          },
+          characterId
+        )
+      }
     }
-  }, [characterId])
+  }, [characterId, setCurrentCharacter, addMessage, getMessagesForCharacter])
 
   const handleSendMessage = async e => {
     e.preventDefault()
     if (!inputMessage.trim() || isLoading || isChatDisabled) return
 
     const userMessage = { role: "user", content: inputMessage, timestamp: new Date().toISOString() }
-    setMessages(prev => [...prev, userMessage])
+    addMessage(userMessage, characterId)
     setInputMessage("")
     setIsLoading(true)
 
@@ -77,8 +82,8 @@ export default function ChatPage({ params }) {
         timestamp: data.timestamp || new Date().toISOString(),
         character: data.character || characterId
       }
-      setMessages(prev => [...prev, assistantMessage])
-      setTokenCount(prev => Math.max(0, prev - 25))
+      addMessage(assistantMessage, characterId)
+      decrementTokenCount(25)
     } catch (error) {
       console.error("Error:", error)
       const errorMessage = {
@@ -90,7 +95,7 @@ export default function ChatPage({ params }) {
         timestamp: new Date().toISOString(),
         character: characterId
       }
-      setMessages(prev => [...prev, errorMessage])
+      addMessage(errorMessage, characterId)
     } finally {
       setIsLoading(false)
     }
