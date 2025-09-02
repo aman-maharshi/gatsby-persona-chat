@@ -2,26 +2,14 @@
 
 A sophisticated AI-powered chat application that brings three iconic characters from F. Scott Fitzgerald's "The Great Gatsby" to life. Choose between Jay Gatsby, Nick Carraway, or Daisy Buchanan for unique, character-specific conversations in an immersive, beautifully designed interface.
 
-## 🚀 **Features**
-
-### **Backend API**
-
-- ✅ Character validation (Gatsby, Nick, Daisy)
-- ✅ Conversation context support
-- ✅ Error handling and validation
-- ✅ Health check endpoint
-- ✅ API documentation
-- ✅ Legacy endpoint support
-
-### **Frontend UI**
-
-- ✅ Character selection page
-- ✅ Real-time chat interface
-- ✅ Suggested questions
-- ✅ Responsive design
-- ✅ Dark theme with Gatsby aesthetics
-- ✅ Message timestamps
-- ✅ Loading states
+<div>
+    <img src="https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=next.js&logoColor=white"/>
+    <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
+    <img src="https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Zustand-FF6B6B?style=for-the-badge&logo=zustand&logoColor=white"/>
+</div>
 
 ## 🛠️ **Setup**
 
