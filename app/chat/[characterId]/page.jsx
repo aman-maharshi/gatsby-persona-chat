@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, use } from "react"
 import { useRouter } from "next/navigation"
-import { Loader2, AlertCircle } from "lucide-react"
+import { AlertCircle } from "lucide-react"
 import ChatForm from "@/components/ChatForm"
 import SuggestedQuestions from "@/components/SuggestedQuestions"
 import UserMessage from "@/components/UserMessage"
@@ -10,6 +10,7 @@ import AgentMessage from "@/components/AgentMessage"
 import ChatHeader from "@/components/ChatHeader"
 import { characterApiService } from "@/lib/apiService"
 import { characters } from "@/constants"
+import TokenDisplay from "@/components/TokenDisplay"
 
 export default function ChatPage({ params }) {
   const { characterId } = use(params)
@@ -17,7 +18,13 @@ export default function ChatPage({ params }) {
   const [messages, setMessages] = useState([])
   const [inputMessage, setInputMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [tokenCount, setTokenCount] = useState(100)
+  const [tokenCount, setTokenCount] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("tokenCount")
+      return saved ? parseInt(saved, 10) : 100
+    }
+    return 100
+  })
   const messagesEndRef = useRef(null)
 
   const currentCharacter = characters.find(char => char.id === characterId)
@@ -30,6 +37,13 @@ export default function ChatPage({ params }) {
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  // Save tokenCount to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("tokenCount", tokenCount.toString())
+    }
+  }, [tokenCount])
 
   // Initialize with welcome message when component mounts
   useEffect(() => {
@@ -168,6 +182,8 @@ export default function ChatPage({ params }) {
           </div>
         </div>
       </main>
+
+      <TokenDisplay tokenCount={tokenCount} />
     </div>
   )
 }
