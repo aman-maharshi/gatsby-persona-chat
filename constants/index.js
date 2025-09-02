@@ -53,16 +53,6 @@ export const characterPrompts = {
 
 export const characters = [
   {
-    id: "gatsby",
-    name: "Jay Gatsby",
-    subtitle: "Welcome to West Egg, old sport",
-    description: "The enigmatic millionaire with dreams of the green light",
-    avatar: "/gatsby.png",
-    welcomeMessage:
-      "Greetings, old sport! I'm Jay Gatsby, and I'm delighted you've joined me at my estate in West Egg. Pour yourself a drink and let's discuss dreams, literature, love, and the endless possibilities that tomorrow may bring. What's on your mind tonight?",
-    inputPlaceholder: "What's on your mind, old sport?"
-  },
-  {
     id: "nick",
     name: "Nick Carraway",
     subtitle: "Observer from the Midwest",
@@ -71,6 +61,16 @@ export const characters = [
     welcomeMessage:
       "Hello there. I'm Nick Carraway, and I find myself reflecting on the remarkable events I've witnessed here in West Egg and East Egg. I'd be happy to share my observations about this fascinating, if troubling, world of wealth and dreams.",
     inputPlaceholder: "Go ahead, I’m curious to hear your side of things."
+  },
+  {
+    id: "gatsby",
+    name: "Jay Gatsby",
+    subtitle: "Welcome to West Egg, old sport",
+    description: "The enigmatic millionaire with dreams of the green light",
+    avatar: "/gatsby.png",
+    welcomeMessage:
+      "Greetings, old sport! I'm Jay Gatsby, and I'm delighted you've joined me at my estate in West Egg. Pour yourself a drink and let's discuss dreams, literature, love, and the endless possibilities that tomorrow may bring. What's on your mind tonight?",
+    inputPlaceholder: "What's on your mind, old sport?"
   },
   {
     id: "daisy",

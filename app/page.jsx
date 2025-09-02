@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { characters } from "../constants"
+import Footer from "@/components/Footer"
 
 export default function Home() {
   const router = useRouter()
@@ -53,6 +54,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   )
 }
